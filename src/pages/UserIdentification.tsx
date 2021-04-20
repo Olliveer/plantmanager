@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/core';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -13,9 +14,14 @@ import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
 export function UserIdentification() {
+  const navigation = useNavigation();
   const [isFocused, setIsFocused] = useState(false);
   const [isFiled, setIsFiled] = useState(false);
   const [name, setName] = useState<string>()
+
+  function handleSubmit() {
+    navigation.navigate('Confirmation');
+  }
 
   function handleInputBlur() {
     setIsFocused(false);
@@ -63,7 +69,10 @@ export function UserIdentification() {
             />
 
             <View style={styles.footer}>
-              <Button />
+              <Button
+                title='Confirmar'
+                onPress={handleSubmit}
+              />
             </View>
           </View>
         </View>

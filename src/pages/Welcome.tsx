@@ -1,4 +1,5 @@
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/core';
 import React from 'react';
 import {
   Dimensions, Image,
@@ -13,6 +14,12 @@ import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
 export function Welcome() {
+  const navigation = useNavigation();
+
+  function handleStart() {
+    navigation.navigate('UserIdentification');
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.wrapper}>
@@ -43,6 +50,7 @@ export function Welcome() {
         <TouchableOpacity
           style={styles.button}
           activeOpacity={0.7}
+          onPress={handleStart}
         >
           <Feather
             name="chevron-right"
