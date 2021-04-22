@@ -11,6 +11,7 @@ import {
   TextInput,
   View
 } from 'react-native';
+import AsyncStorage, { AsyncStorageStatic } from '@react-native-async-storage/async-storage';
 import { Button } from '../components/Button';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
@@ -22,10 +23,12 @@ export function UserIdentification() {
   const [isFiled, setIsFiled] = useState(false);
   const [name, setName] = useState<string>()
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (!name) {
       return Alert.alert('Me diz como chamar você 😥')
     }
+
+    await AsyncStorage.setItem('@plantmanager:user', name);
 
     navigation.navigate('Confirmation');
   }
