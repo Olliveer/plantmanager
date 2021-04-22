@@ -30,12 +30,11 @@ export const PlantCardSecondary = ({ data, ...rest }: PlantProps) => {
       </Text>
 
       <View style={styles.details}>
-        <Text style={styles.timeLabel}>
-          {data.hour}
-        </Text>
-
         <Text style={styles.time}>
           Regar às
+        </Text>
+        <Text style={styles.timeLabel}>
+          {data.hour}
         </Text>
       </View>
     </RectButton>
