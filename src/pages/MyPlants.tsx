@@ -1,58 +1,47 @@
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View, Image, Text, FlatList } from 'react-native';
 import { Header } from '../components/Header';
 import colors from '../styles/colors';
 
-import waterdrop from '../assets/waterdrop.png';
+import waterdrop from '../assets/waterdrop.png'
 import { loadPlant, PlantProps } from '../libs/storage';
 import { formatDistance } from 'date-fns';
-import pt from 'date-fns/esm/locale/pt';
-import { FlatList } from 'react-native-gesture-handler';
+import { pt } from 'date-fns/locale';
 import fonts from '../styles/fonts';
 import { PlantCardSecondary } from '../components/PlantCardSecondary';
 
 export function MyPlants() {
-  const [myPlants, setMyPlants] = useState<PlantProps[]>([])
+  const [myPlants, setMyPlants] = useState<PlantProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [nextWatered, setNextWatered] = useState<string>();
 
   useEffect(() => {
     async function loadStorageData() {
-      const plantStorage = await loadPlant();
+      const plantsStoraged = await loadPlant();
 
       const nextTime = formatDistance(
-        new Date(plantStorage[0].dateTimeNotification).getTime(),
+        new Date(plantsStoraged[0].dateTimeNotification).getTime(),
         new Date().getTime(),
         {
           locale: pt
         }
-      );
-
-      setNextWatered(
-        `Não esqueça de regar a ${plantStorage[0].name} à ${nextTime} horas.`
       )
 
-      setMyPlants(plantStorage);
+      setNextWatered(`Regue sua ${plantsStoraged[0].name} daqui a ${nextTime}`)
+      setMyPlants(plantsStoraged);
       setLoading(false);
     }
 
-    loadStorageData();
+    loadStorageData()
   }, [])
-
-
 
   return (
     <View style={styles.container}>
       <Header />
 
       <View style={styles.spotlight}>
-        <Image
-          source={waterdrop}
-          style={styles.spotlightImage}
-        />
-        <Text style={styles.spotlightText}>
-          {nextWatered}
-        </Text>
+        <Image source={waterdrop} style={styles.spotlightImage} />
+        <Text style={styles.spotlightText}>{nextWatered}</Text>
       </View>
 
       <View style={styles.plants}>
@@ -62,20 +51,18 @@ export function MyPlants() {
 
         <FlatList
           data={myPlants}
-          keyExtractor={(item) => String(item.id)}
+          keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
-
-            <PlantCardSecondary
-              data={item}
-            />
+            //@ts-ignore
+            <PlantCardSecondary data={item} />
           )}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ flex: 1 }}
+        // contentContainerStyle={{ flex: 1 }}
         />
       </View>
-
     </View>
-  )
+
+  );
 }
 
 const styles = StyleSheet.create({
@@ -115,4 +102,4 @@ const styles = StyleSheet.create({
     color: colors.heading,
     marginVertical: 20
   }
-})
+});

@@ -64,14 +64,14 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end'
   },
   timeLabel: {
-    fontSize: 16,
-    fontFamily: fonts.text,
-    color: colors.body_light
-  },
-  time: {
     marginTop: 5,
     fontSize: 16,
     fontFamily: fonts.heading,
     color: colors.body_dark
+  },
+  time: {
+    fontSize: 16,
+    fontFamily: fonts.text,
+    color: colors.body_light
   }
 });
