@@ -6,7 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "server": "json-server ./src/services/server.json --host 192.168.100.63 -w -p 3333"
+    "server": "json-server ./src/services/server.json --host 192.168.100.63 -d 750 -w -p 3333"
   },
   "dependencies": {
     "@expo-google-fonts/jost": "^0.1.0",
@@ -30,6 +30,7 @@
     "react-native-reanimated": "~2.1.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.0.0",
+    "react-native-svg": "12.1.0",
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {
