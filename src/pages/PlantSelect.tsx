@@ -9,6 +9,7 @@ import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import { Load } from '../components/Load';
 import { color } from 'react-native-reanimated';
+import { useNavigation } from '@react-navigation/core';
 
 interface EnviromentProps {
   key: string;
@@ -29,6 +30,7 @@ interface PlantProps {
 }
 
 export function PlantSelect() {
+  const navigation = useNavigation();
   const [environments, setEnvironments] = useState<EnviromentProps[]>([]);
   const [plants, setPlants] = useState<PlantProps[]>([]);
   const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>([]);
@@ -87,6 +89,10 @@ export function PlantSelect() {
     fetchPlants();
   }
 
+  function handlePlantSelect(plant: PlantProps) {
+    navigation.navigate('PlantSave', { plant });
+  }
+
   useEffect(() => {
     async function fetchEnviroment() {
       const { data } = await api.get('plants_environments', {
@@ -133,6 +139,7 @@ export function PlantSelect() {
       <View>
         <FlatList
           data={environments}
+          keyExtractor={(item) => String(item.key)}
           renderItem={({ item }) => (
             <EnvironmentButton
               title={item.title}
@@ -149,9 +156,11 @@ export function PlantSelect() {
       <View style={styles.plants}>
         <FlatList
           data={filteredPlants}
+          keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
             <PlantCardPrimary
               data={item}
+              onPress={() => handlePlantSelect(item)}
             />
           )}
           showsVerticalScrollIndicator={false}
