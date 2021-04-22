@@ -12,7 +12,7 @@ import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import { format, isBefore } from 'date-fns';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { PlantProps } from '../libs/storage';
+import { plantSave, PlantProps } from '../libs/storage';
 
 interface PLantParams {
   plant: PlantProps;
@@ -41,6 +41,17 @@ export function PlantSave() {
 
   function handleOpenDateTimePickerForAndroid() {
     setShowDatePicker(oldState => !oldState)
+  }
+
+  async function handleSave() {
+    try {
+      await plantSave({
+        ...plant,
+        dateTimeNotification: seletedDateTime
+      });
+    } catch (error) {
+      Alert.alert('Nçao foi possível salvar 😐')
+    }
   }
 
   return (
@@ -80,8 +91,7 @@ export function PlantSave() {
             value={seletedDateTime}
             mode='time'
             display='clock'
-            //@ts-ignore
-            onChange={handleChangeTime}
+            onChange={() => handleChangeTime}
           />
         )}
 
@@ -98,7 +108,7 @@ export function PlantSave() {
 
         <Button
           title='Cadastrar planta'
-          onPress={() => { }}
+          onPress={() => handleSave()}
         />
 
       </View>
