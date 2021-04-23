@@ -24,7 +24,6 @@ export function MyPlants() {
         text: 'Sim 😢', onPress: async () => {
           try {
             removePlant(plant.id);
-
             setMyPlants((oldData) =>
               oldData.filter((item) => item.id !== plant.id)
             );
